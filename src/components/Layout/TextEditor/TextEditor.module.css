@@ -1,0 +1,31 @@
+.Text {
+  padding: 10px 20px;
+}
+
+.Text input {
+  height: 30px;
+  font-size: 17px;
+  border: none;
+  margin: 10px 20px;
+  width: 90%;
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+}
+
+.Text button {
+  justify-content: end;
+}
+
+.send {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.send button {
+  border: none;
+  color: white;
+  font-size: 20px;
+  padding: 10px 40px;
+  border-radius: 20px;
+  background: rgb(0, 214, 0);
+}

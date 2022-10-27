@@ -1,8 +1,11 @@
+import TextEditor from "../TextEditor/TextEditor";
+import classes from "./Home.module.css";
 const Home = () => {
   return (
-    <center>
-      <p>Home Page</p>
-    </center>
+    <div className={classes.home}>
+      <h1>Home Page</h1>
+      <TextEditor/>
+    </div>
   );
 };
 
