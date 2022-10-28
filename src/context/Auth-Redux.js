@@ -12,7 +12,12 @@ const AuthSlice = createSlice({
       state.email = action.payload.email;
       state.isLogin = true;
     },
-    logout: () => {},
+    logout: (state) => {
+      localStorage.removeItem("login");
+      state.id = '';
+      state.email = '';
+      state.isLogin = false;
+    },
   },
 });
 

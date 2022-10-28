@@ -6,10 +6,12 @@ import SignUp from "./components/auth/SignUp";
 import Home from "./components/Layout/Home/Home";
 import { useEffect } from "react";
 import { AuthAction } from "./context/Auth-Redux";
+import Header from "./components/header/Header";
+import Inbox from "./components/Layout/Indox/Inbox";
+import Sent from "./components/Layout/Sent/Sent";
 
 function App() {
   const isLogin = useSelector((state) => state.auth.isLogin);
-  console.log(isLogin);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,10 +19,11 @@ function App() {
     if (login) {
       dispatch(AuthAction.login(login));
     }
-  });
+  }, [dispatch]);
 
   return (
     <div className="App">
+      <Header />
       <Switch>
         {!isLogin && (
           <Route path={"/Login"}>
@@ -35,6 +38,16 @@ function App() {
         {isLogin && (
           <Route path={"/Home"}>
             <Home />
+          </Route>
+        )}
+        {isLogin && (
+          <Route path={"/Inbox"}>
+            <Inbox />
+          </Route>
+        )}
+        {isLogin && (
+          <Route path={"/Sent"}>
+            <Sent />
           </Route>
         )}
         {isLogin && (
