@@ -7,6 +7,7 @@ const Inbox = () => {
   const draftemail = useSelector((state) => state.auth.email);
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [unRead, setUnRead] = useState(0);
 
   useEffect(() => {
     const email = draftemail.split("@");
@@ -19,16 +20,21 @@ const Inbox = () => {
         const data = await res.json();
         console.log(data);
         let newlist = [];
+        let unRead = 0;
         for (const key in data) {
+          if (data[key].isRead) unRead++;
           const obj = {
             to: data[key].from,
+            id: key,
             edit: data[key].edit,
             subject: data[key].subject,
+            isRead: data[key].isRead,
             date: new Date(data[key].data),
           };
           newlist = [obj, ...newlist];
           console.log(newlist);
         }
+        setUnRead(unRead);
         setList(newlist);
       }
       setLoading(false);
@@ -36,18 +42,22 @@ const Inbox = () => {
     getHandller();
   }, [draftemail]);
 
+
   return (
     <div>
-      <h1>Inbox</h1>
+      <h1>{`Inbox (${unRead})`} </h1>
       {loading && <h3>Loading...</h3>}
       {list.length > 0 &&
         list.map((element, index) => {
+          console.log(element);
           return (
             <InboxPage
               key={index}
               to={`From-${element.to}`}
               date={element.date}
+              id={element.id}
               edit={element.edit}
+              isRead={element.isRead}
               subject={element.subject}
             />
           );

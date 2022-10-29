@@ -3,7 +3,7 @@ import { useRef } from "react";
 import classes from "./ReadEditor.module.css";
 
 const ReadEditor = (props) => {
-  const editorRef = useRef();
+  const editRef = useRef();
   const toRef = useRef();
   const subjectRef = useRef();
   console.log(props);
@@ -13,7 +13,7 @@ const ReadEditor = (props) => {
       <input ref={toRef} placeholder="To -" value={props.to} />
       <br />
       <input ref={subjectRef} placeholder="Subject -" value={props.subject} />
-      <JoditEditor ref={editorRef} value={props.edit} />
+      <JoditEditor ref={editRef} value={props.edit} />
       <br />
     </div>
   );

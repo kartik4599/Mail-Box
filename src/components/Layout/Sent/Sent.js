@@ -47,6 +47,7 @@ const Sent = () => {
               key={index}
               to={`To-${element.to}`}
               date={element.date}
+              isRead={false}
               edit={element.edit}
               subject={element.subject}
             />

@@ -37,6 +37,7 @@ const TextEditor = () => {
           subject: subjectRef.current.value,
           edit: editorRef.current.value,
           data: new Date(),
+          isRead:true
         }),
       }
     );
