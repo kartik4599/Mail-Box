@@ -42,6 +42,44 @@ const Inbox = () => {
     getHandller();
   }, [draftemail]);
 
+  const decrement = () => {
+    setUnRead(unRead - 1);
+  };
+
+  const deleteHandler = async (id) => {
+    const email = draftemail.split("@");
+    const res = await fetch(
+      `https://expense-tracker-3cb01-default-rtdb.asia-southeast1.firebasedatabase.app/mail/${email[0]}/recive/${id}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    console.log(await res.json());
+  };
+
+  const ClickHandler = async (id, date, edit, to, subject) => {
+    const email = draftemail.split("@");
+    const res = await fetch(
+      `https://expense-tracker-3cb01-default-rtdb.asia-southeast1.firebasedatabase.app/mail/${email[0]}/recive/${id}.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          data: date,
+          edit: edit,
+          from: to,
+          isRead: false,
+          subject: subject,
+        }),
+      }
+    );
+    if (res.ok) {
+      console.log("Done");
+      console.log(
+        `https://expense-tracker-3cb01-default-rtdb.asia-southeast1.firebasedatabase.app/mail/${email[0]}/recive/${id}.json`
+      );
+    }
+  };
 
   return (
     <div>
@@ -56,6 +94,16 @@ const Inbox = () => {
               to={`From-${element.to}`}
               date={element.date}
               id={element.id}
+              delete={deleteHandler.bind(null, element.id)}
+              decrement={decrement}
+              change={ClickHandler.bind(
+                null,
+                element.id,
+                element.date,
+                element.edit,
+                element.to,
+                element.subject
+              )}
               edit={element.edit}
               isRead={element.isRead}
               subject={element.subject}

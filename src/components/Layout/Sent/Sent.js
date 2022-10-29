@@ -24,6 +24,7 @@ const Sent = () => {
           const obj = {
             to: data[key].to,
             edit: data[key].edit,
+            id: key,
             subject: data[key].subject,
             date: new Date(data[key].date),
           };
@@ -36,9 +37,20 @@ const Sent = () => {
     getHandller();
   }, [draftemail]);
 
+  const deleteHandler = async (id) => {
+    const email = draftemail.split("@");
+    const res = await fetch(
+      `https://expense-tracker-3cb01-default-rtdb.asia-southeast1.firebasedatabase.app/mail/${email[0]}/send/${id}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+    console.log(await res.json());
+  };
+
   return (
     <div>
-      <h1>Inbox</h1>
+      <h1>Sent</h1>
       {loading && <h3>Loading...</h3>}
       {list.length > 0 &&
         list.map((element, index) => {
@@ -48,6 +60,7 @@ const Sent = () => {
               to={`To-${element.to}`}
               date={element.date}
               isRead={false}
+              delete={deleteHandler.bind(null, element.id)}
               edit={element.edit}
               subject={element.subject}
             />
