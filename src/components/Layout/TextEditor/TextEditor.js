@@ -12,7 +12,8 @@ const TextEditor = () => {
   const subjectRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  const editorHandler = async () => {
+  const editorHandler = async (e) => {
+    e.preventDefault();
     setLoading(true);
     const sendEmail = toRef.current.value.split("@");
     const res = await fetch(
@@ -37,7 +38,7 @@ const TextEditor = () => {
           subject: subjectRef.current.value,
           edit: editorRef.current.value,
           data: new Date(),
-          isRead:true
+          isRead: true,
         }),
       }
     );
@@ -51,14 +52,16 @@ const TextEditor = () => {
   return (
     <div className={classes.Text}>
       {loading && <h3>Sending...</h3>}
-      <input ref={toRef} placeholder="To -" />
-      <br />
-      <input ref={subjectRef} placeholder="Subject -" />
-      <JoditEditor ref={editorRef} />
-      <br />
-      <div className={classes.send}>
-        <button onClick={editorHandler}>Send</button>
-      </div>
+      <form onSubmit={editorHandler}>
+        <input ref={toRef} placeholder="To -" type={"email"} required />
+        <br />
+        <input ref={subjectRef} placeholder="Subject -" required />
+        <JoditEditor ref={editorRef} />
+        <br />
+        <div className={classes.send}>
+          <button>Send</button>
+        </div>
+      </form>
     </div>
   );
 };

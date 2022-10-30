@@ -5,7 +5,6 @@ import classes from "./Inbox.module.css";
 const InboxPage = (props) => {
   const [edit, setEdit] = useState(false);
   const [isRead, setRead] = useState(props.isRead);
-  const [dlt, setDelete] = useState(true);
 
   const ClickHandler = async () => {
     setEdit(!edit);
@@ -16,14 +15,9 @@ const InboxPage = (props) => {
     props.change();
   };
 
-  const deleteHandler=()=>{
-    setDelete(false);
-    props.delete();
-  }
-
   return (
-    <div>
-      <div className={dlt?  classes.Indox:classes.delete}>
+    <div id={props.id}>
+      <div className={classes.Indox}>
         {isRead && (
           <div className={classes.dot} onClick={ClickHandler}>
             .
@@ -37,7 +31,7 @@ const InboxPage = (props) => {
           } / ${props.date.getFullYear()} `}
           {`(${props.date.getHours()}:${props.date.getMinutes()})`}
         </span>
-        <button onClick={deleteHandler}>Delete</button>
+        <button onClick={props.delete}>Delete</button>
       </div>
       {edit && (
         <div>
